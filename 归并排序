@@ -1,0 +1,57 @@
+class MergeSort:
+    def __init__(self, flag):
+        self.flag = flag
+    def process(self, l1st, length):
+        L, R = 0, length - 1
+        if L == R:
+            return l1st
+        else:
+            while L < R:
+                mid = L + (R - L) >> 1 #
+                l1 = l1st[L:mid+1]
+                r1 = l1st[mid+1:R+1]
+                left = self.process(l1, mid - L + 1)
+                right = self.process(r1, R - mid)
+                l1st1 = self.merge(left, right)
+                return l1st1
+
+    def merge(self, L, R):
+        l1st = []
+        lindex = 0
+        rindex = 0
+        if self.flag == 0:
+            while lindex < len(L) and rindex < len(R):
+                if L[lindex] <= R[rindex]:
+                    l1st.append(L[lindex])
+                    lindex += 1
+                else:
+                    l1st.append(R[rindex])
+                    rindex += 1
+        else:
+            while lindex < len(L) and rindex < len(R):
+                if L[lindex] >= R[rindex]:
+                    l1st.append(L[lindex])
+                    lindex += 1
+                else:
+                    l1st.append(R[rindex])
+                    rindex += 1
+        if lindex == len(L):
+            l1st.extend(R[rindex:len(R)])
+        if rindex == len(R):
+            l1st.extend(L[lindex:len(L)])
+        return l1st
+
+
+while 1:
+    try:
+        size = int(input())
+        arr = list(map(int, input().split()))
+        f = int(input())
+        sort = MergeSort(f)
+        l = sort.process(arr, size)
+        p = ''
+        for i in range(size):
+            p = p + str(l[i]) + ' '
+        print(p)
+    except:
+        break
