@@ -1,0 +1,86 @@
+Python 2
+# -*- coding:utf-8 -*-
+class Solution:
+    # array 二维列表
+    def Find(self, target, array):
+        # write code here
+        #先用目标值对比矩阵对角线两端点值
+        l = len(array)
+        if target < array[0][0] or target > array[l - 1][l - 1]:
+            print('false')
+            return
+        elif target == array[0][0] or target == array[l - 1][l - 1]:
+            print('true')
+            return
+        else:  #用二分法查找目标值是否在对角线上，如不在，输入离目标值最近的右端点位置
+            l1st1 = []
+            for i in range(l):
+                l1st1.append(array[i][i])
+            if not self.bisection(l1st1, target):
+                return
+                #
+            else:
+                r = self.bisection(l1st1, target)  #离目标值最近的右端点位置
+                # print(r)
+            #利用该矩阵的特点，刨除右端点往左的部分矩阵，即排除了部分值    
+            for s in range(r, l):
+                if target < array[0][s] and target < array[s][0]:
+                    print('false')
+                   # print('999')，调试
+                    return
+                elif target == array[0][s] or target == array[s][0]:
+                    print('true')
+                    return
+                elif target > array[0][s] and target > array[s][0]:
+                    lst1, lst2 = [], []
+                    for i in range(s + 1):  #注意，要取到s，所以为s+1
+                        lst1.append(array[i][s])
+                        lst2.append(array[s][i])
+                   # print(lst1, lst2)
+                    if (not self.bisection(lst1, target)) or (not self.bisection(lst2, target)):
+                        return
+                elif target > array[0][s] and target < array[s][0]:
+                    lst1 = []
+                    for i in range(s + 1):
+                        lst1.append(array[i][s])
+                    if not self.bisection(lst1, target):
+                        return
+                elif target < array[0][s] and target > array[s][0]:
+                    lst1 = []
+                    for i in range(s + 1):
+                        lst1.append(array[s][i])
+                    if not self.bisection(lst1, target):
+                        return
+            print('false')
+           # print('888')
+            return
+
+    def bisection(self, l1st, target1):  # 二分法
+        l = len(l1st)
+        L, R = 0, l - 1
+        while L < R - 1:
+            if target1 == l1st[L + (R - L) >> 1]:
+                print('true')
+                return 0
+            elif target1 < l1st[L + (R - L) >> 1]:
+                R = L + (R - L) >> 1
+            else:
+                L = L + (R - L) >> 1
+        return R
+
+for t in range(10):
+    print(t)
+    a = [[1,2,5],[3,4,6],[5,7,9]]
+    b = Solution()
+    b.Find(t, a)
+
+'''try:
+    while 1:
+        data = list(eval(raw_input()))
+        t = data[0]
+        a = data[1]
+        e = Solution()
+        e.Find(t, a)
+except:
+    pass
+    '''
