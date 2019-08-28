@@ -1,0 +1,45 @@
+#Python 3
+def insert_sort(num, tpe, names, scores):
+    if num == 1:
+        print(names[0] + ' ' + str(scores[0]))
+    elif num < 1:
+        print('num error')
+    if tpe == 1:
+        for i in range(1, num):
+            for j in range(i, 0, -1):
+                if scores[j] < scores[j - 1]:
+                    scores[j], scores[j - 1] = scores[j - 1], scores[j]
+                    names[j], names[j - 1] = names[j - 1], names[j]
+                else:
+                    break
+        for i in range(num):
+            print(names[i] + ' ' + str(scores[i]))
+    elif tpe == 0:
+        for i in range(1, num):
+            for j in range(i, 0, -1):
+                if scores[j] > scores[j - 1]:
+                    scores[j], scores[j - 1] = scores[j - 1], scores[j]
+                    names[j], names[j - 1] = names[j - 1], names[j]
+                else:
+                    break
+        for i in range(num):
+            print(names[i] + ' ' + str(scores[i]))
+    else:
+        print('type error')
+    return
+ 
+
+try:
+    while True:
+        datas = []
+        Names = []
+        Scores = []
+        Num = int(input())
+        Tpe = int(input())
+        for i in range(Num):
+            datas = input().split(' ')
+            Names.append(datas[0])
+            Scores.append(int(datas[1]))
+        insert_sort(Num, Tpe, Names, Scores)
+except:
+    pass
