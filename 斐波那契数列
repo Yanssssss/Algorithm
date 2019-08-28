@@ -1,0 +1,27 @@
+# -*- coding:utf-8 -*-
+class Solution:
+    def __init__(self):
+        self.l = {}  #cache
+        
+    def Fibonacci(self, n):
+        # write code here
+        if n == 0:
+            return 0
+        elif n == 1:
+            return 1
+        else:
+            if str(n) in self.l:
+                v = self.l[str(n)]
+            else:
+                v = self.Fibonacci(n-1) + self.Fibonacci(n-2)
+                self.l[str(n)] = v
+            return v
+        
+
+f = Solution()
+while True:
+    try:
+        n = int(input())
+        print(f.Fibonacci(n))
+    except:
+        break
