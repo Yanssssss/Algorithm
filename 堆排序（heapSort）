@@ -34,27 +34,41 @@ class heap:
         return self.arr
 
     def heapify(self, index):
-        while 2 * index + 1 < len(self.arr) - 1:
-            if self.flag == 0:
-                if self.arr[index] < max(self.arr[2 * index + 1], self.arr[2 * index + 2]):
-                    if self.arr[2 * index + 1] <= self.arr[2 * index + 2]:
-                        self.arr[index], self.arr[2 * index + 2] = self.arr[2 * index + 2], self.arr[index]
-                        index = 2 * index + 2
+        while 2 * index + 1 <= len(self.arr) - 1:  #判断左子节点
+            if 2 * index + 2 == len(self.arr): #判断右子节点
+                if self.flag == 0:
+                    if self.arr[index] < self.arr[2 * index + 1]:
+                            self.arr[index], self.arr[2 * index + 1] = self.arr[2 * index + 1], self.arr[index]
+                            index = 2 * index + 1
                     else:
-                        self.arr[index], self.arr[2 * index + 1] = self.arr[2 * index + 1], self.arr[index]
-                        index = 2 * index + 1
+                        break
                 else:
-                    break
+                    if self.arr[index] > self.arr[2 * index + 1]:
+                            self.arr[index], self.arr[2 * index + 1] = self.arr[2 * index + 1], self.arr[index]
+                            index = 2 * index + 1
+                    else:
+                        break
             else:
-                if self.arr[index] > min(self.arr[2 * index + 1], self.arr[2 * index + 2]):
-                    if self.arr[2 * index + 1] >= self.arr[2 * index + 2]:
-                        self.arr[index], self.arr[2 * index + 2] = self.arr[2 * index + 2], self.arr[index]
-                        index = 2 * index + 2
+                if self.flag == 0:
+                    if self.arr[index] < max(self.arr[2 * index + 1], self.arr[2 * index + 2]):
+                        if self.arr[2 * index + 1] <= self.arr[2 * index + 2]:
+                            self.arr[index], self.arr[2 * index + 2] = self.arr[2 * index + 2], self.arr[index]
+                            index = 2 * index + 2
+                        else:
+                            self.arr[index], self.arr[2 * index + 1] = self.arr[2 * index + 1], self.arr[index]
+                            index = 2 * index + 1
                     else:
-                        self.arr[index], self.arr[2 * index + 1] = self.arr[2 * index + 1], self.arr[index]
-                        index = 2 * index + 1
+                        break
                 else:
-                    break
+                    if self.arr[index] > min(self.arr[2 * index + 1], self.arr[2 * index + 2]):
+                        if self.arr[2 * index + 1] >= self.arr[2 * index + 2]:
+                            self.arr[index], self.arr[2 * index + 2] = self.arr[2 * index + 2], self.arr[index]
+                            index = 2 * index + 2
+                        else:
+                            self.arr[index], self.arr[2 * index + 1] = self.arr[2 * index + 1], self.arr[index]
+                            index = 2 * index + 1
+                    else:
+                        break
         print('heapify successful.')
         return self.arr
 
@@ -82,6 +96,5 @@ def heapsort(l1st):
     print(l1st)
     return l1st
 
-i = [5, 6, 7, 8, 9, 10, 11, 12, 13]
+i = [8, 6, 7, 20]
 heapsort(i)
-
