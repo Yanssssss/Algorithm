@@ -1,4 +1,5 @@
 class heap:
+'''能通过flag实现大根堆和小根堆的选择，能选着用heapInsert还是heapify来创建堆。'''
     def __init__(self, flag):
         self.flag = flag #0:大根堆，other:小根堆
         self.arr = []
