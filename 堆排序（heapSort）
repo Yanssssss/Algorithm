@@ -1,0 +1,87 @@
+class heap:
+    def __init__(self, flag):
+        self.flag = flag #0:大根堆，other:小根堆
+        self.arr = []
+    def main(self, l1st, flag):
+        if flag == 0:  #0:Insert;other:heapify
+            for i in range(len(l1st)):
+                self.heapInsert(l1st[i])  #O(N*logN)
+        else:
+            self.arr = l1st
+            for i in range(len(l1st) - 1, -1, -1):
+                self.heapify(i)  #O(N)
+        print(self)
+        return self.arr
+
+    def heapInsert(self, digit):
+        self.arr.append(digit)
+        i = len(self.arr) - 1
+        while int((i - 1) / 2) >= 0:
+            if self.flag == 0:
+                if self.arr[i] > self.arr[int((i - 1) / 2)]:
+                    self.arr[i], self.arr[int((i - 1) / 2)] = self.arr[int((i - 1) / 2)], self.arr[i]
+                    i = int((i - 1) / 2)
+                else:
+                    break
+            else:
+                if self.arr[i] < self.arr[(i - 1) / 2]:
+                    self.arr[i], self.arr[(i - 1) / 2] = self.arr[(i - 1) / 2], self.arr[i]
+                    i = (i - 1) / 2
+                else:
+                    break
+        print('Insert %d.' %digit)
+        print(self)
+        return self.arr
+
+    def heapify(self, index):
+        while 2 * index + 1 < len(self.arr) - 1:
+            if self.flag == 0:
+                if self.arr[index] < max(self.arr[2 * index + 1], self.arr[2 * index + 2]):
+                    if self.arr[2 * index + 1] <= self.arr[2 * index + 2]:
+                        self.arr[index], self.arr[2 * index + 2] = self.arr[2 * index + 2], self.arr[index]
+                        index = 2 * index + 2
+                    else:
+                        self.arr[index], self.arr[2 * index + 1] = self.arr[2 * index + 1], self.arr[index]
+                        index = 2 * index + 1
+                else:
+                    break
+            else:
+                if self.arr[index] > min(self.arr[2 * index + 1], self.arr[2 * index + 2]):
+                    if self.arr[2 * index + 1] >= self.arr[2 * index + 2]:
+                        self.arr[index], self.arr[2 * index + 2] = self.arr[2 * index + 2], self.arr[index]
+                        index = 2 * index + 2
+                    else:
+                        self.arr[index], self.arr[2 * index + 1] = self.arr[2 * index + 1], self.arr[index]
+                        index = 2 * index + 1
+                else:
+                    break
+        print('heapify successful.')
+        return self.arr
+
+    def __repr__(self):
+        string = ''
+        i = 0
+        j = 1
+        while i <= len(self.arr):
+            string += str(self.arr[i: j]) + '\n'
+            i, j = j, 2 * (j - i)  # good
+            j += i
+            #print(i, j)
+        return string
+
+def heapsort(l1st):
+    s = heap(0)
+    l1st = s.main(l1st, 1)
+    l1st[0], l1st[-1] = l1st[-1], l1st[0]
+    s.arr = l1st
+    for i in range(len(l1st) - 1, 0, -1):
+        s.arr = s.arr[0:i]
+        l1st[0: i] = s.heapify(0)
+        l1st[0], l1st[i-1] = l1st[i-1], l1st[0]
+        s.arr = l1st
+    print(l1st)
+    return l1st
+
+i = [5, 6, 7, 8, 9, 10, 11, 12, 13]
+heapsort(i)
+
